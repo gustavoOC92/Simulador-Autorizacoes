@@ -1,0 +1,103 @@
+<div class="container">
+    <p-card class="card">
+        <h1 class="d-flex justify-content-center mt-3 mb-3">
+            Solicitação de Guia de Autorização
+        </h1>
+        <p-divider></p-divider>
+        <form [formGroup]="this.formGuia">
+            <div class="d-flex flex-wrap gap-5 mb-3">
+                <div class="d-flex flex-column">
+                    <span>Número Carteira</span>
+                    <span class="field-value">{{ numeroCarteira }}</span>
+                </div>
+
+                <div class="d-flex flex-column">
+                    <span>Nome Beneficiário</span>
+                    <span class="field-value">{{ nomeBeneficiario }}</span>
+                </div>
+
+                <div class="d-flex flex-column">
+                    <span>Data Nascimento</span>
+                    <span class="field-value">{{ dataNascimento | date:'dd/MM/yyyy' }}</span>
+                </div>
+
+                <div class="d-flex flex-column">
+                    <span>Nome Plano</span>
+                    <span class="field-value">{{ plano }}</span>
+                </div>
+            </div>
+            <p-divider></p-divider>
+            <div class="d-flex flex-wrap gap-5">
+                <div class="d-flex flex-column">
+                    <span>Código Prestador</span>
+                    <input type="text" pInputText formControlName="codigoPrestador" />
+                </div>
+
+                <div class="d-flex flex-column">
+                    <span>Prestador</span>
+                    <p-select [options]="prestadores" 
+                        optionLabel="nomePrestador" 
+                        placeholder="Selecione o Prestador"
+                        formControlName="prestador" />
+                </div>
+
+                <div class="d-flex flex-column">
+                    <span>CNES</span>
+                    <input type="text" pInputText formControlName="cnes" />
+                </div>
+            </div>
+            <p-divider></p-divider>
+            <div class="d-flex flex-column gap-3 tabela-procedimentos">
+                <p-button label="Inserir Procedimentos" severity="info" (onClick)="abrirDialogInserirProcedimentos()" />
+                <p-table [value]="this.procedimentosGuia" [scrollable]="true" scrollHeight="300px" *ngIf="this.procedimentosGuia.length > 0">
+                    <ng-template #header>
+                        <tr>
+                            <th>Tabela</th>
+                            <th>Código Procedimento</th>
+                            <th>Descrição Procedimento</th>
+                            <th>Quantidade</th>
+                            <th></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template #body let-procedimentoGuia>
+                        <tr>
+                            <td>{{ procedimentoGuia.tabelaProcedimento }}</td>
+                            <td>{{ procedimentoGuia.codigoProcedimento }}</td>
+                            <td>{{ procedimentoGuia.descricaoProcedimento }}</td>
+                            <td>
+                                {{ procedimentoGuia.quantidadeProcedimento }}
+                                <!-- <input type="number" class="col-2 me-2" pInputText formControlName="quantidadeProcedimento" />
+                                <p-button label="OK" severity="success" (onClick)="adicionarQuantidade(procedimentoGuia)" /> -->
+                            </td>
+                            <td>
+                                <p-button label="Remover" severity="danger" (onClick)="removerProcedimento(procedimentoGuia.codigoProcedimento)" />
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+            <div class="d-flex justify-content-center mt-3 botoes">
+                <p-button label="Cancelar" severity="danger" (onClick)="cancelarPreenchimentoGuia()" class="me-3"/>
+                <p-button label="Enviar" severity="success" (onClick)="enviarAutorizacao()" />
+            </div>
+        </form>
+    </p-card>
+</div>
+
+<app-inserir-procedimentos
+    [visible]="this.exibirDialogInserirProcedimentos"
+    (procedimentoAutorizacao)="inserirProcedimento($event)"
+    (onClose)="fecharDialogInserirProcedimentos()">
+</app-inserir-procedimentos>
+
+<app-dialog-aviso 
+    [visible]="this.exibirDialogAviso"
+    [mensagem]="this.mensagemAviso"
+    (onClose)="fecharDialogAviso()">
+</app-dialog-aviso>
+
+<app-autorizacao-resultado
+    [visible]="this.exibirDialogResultado"
+    [retorno]="this.result()!"
+    (onClose)="fecharDialogResultado()">
+</app-autorizacao-resultado>

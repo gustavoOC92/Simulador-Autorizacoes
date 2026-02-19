@@ -1,0 +1,23 @@
+<div class="container">
+    <p-card class="card">
+        <div class="d-flex justify-content-center mt-3 mb-3">
+            <h1>Simulador de Autorizações</h1>
+        </div>
+
+        <div class="logo mb-3">
+            <img src="assets/images/cartao_beneficiario.png" alt="Imagem de Carteira fictícia" />
+        </div>
+
+        <div class="content-central">
+            <span class="mb-3">Digite o número da carteira</span>
+            <input class="mb-3" type="text" pInputText [(ngModel)]="this.numeroCarteira" />
+            <p-button label="Continuar" severity="info" (onClick)="verificaCarteira()" />
+        </div>
+    </p-card>
+</div>
+
+<app-dialog-aviso 
+    [visible]="this.exibirDialogAviso"
+    [mensagem]="this.mensagemAviso"
+    (onClose)="fecharDialogAviso()">
+</app-dialog-aviso>

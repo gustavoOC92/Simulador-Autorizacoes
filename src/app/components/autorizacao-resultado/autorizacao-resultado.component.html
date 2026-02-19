@@ -1,0 +1,18 @@
+<p-dialog [visible]="this.visible"
+          [modal]="true"
+          [closable]="false"
+          [draggable]="false">
+    <ng-template pTemplate="header">
+        <span class="header">Autorização</span>
+    </ng-template>
+    <ng-template pTemplate="body">
+        <div class="d-flex flex-column align-items-center">
+            <i [ngClass]="classeStatus"></i>
+            <span class="mt-3 mb-3">{{ retorno.status }}</span>
+            <span>{{ retorno.motivos[0] }}</span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-button label="Fechar" severity="info" (onClick)="fecharDialog()" />
+    </ng-template>
+</p-dialog>

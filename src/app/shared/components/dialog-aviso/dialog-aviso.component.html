@@ -1,0 +1,14 @@
+<p-dialog [visible]="this.visible"
+          [modal]="true"
+          [closable]="false"
+          [draggable]="false" >
+    <ng-template pTemplate="header">
+        <span class="header">Aviso!</span>
+    </ng-template>
+    <ng-template pTemplate="body">
+        <span>{{ this.mensagem }}</span>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-button label="Fechar" severity="info" (onClick)="fecharDialog()" />
+    </ng-template>
+</p-dialog>

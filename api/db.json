@@ -1,0 +1,72 @@
+{
+    "beneficiarios": [
+        {
+            "nome": "João da Silva",
+            "numeroCarteira": "1234567890",
+            "dataNascimento": "1992-02-27",
+            "plano": "Especial",
+            "dataInicioContrato": "2025-12-01"
+        }
+    ],
+    "prestadores": [
+        {
+            "codigoPrestador": "01234",
+            "nomePrestador": "Hospital ABC",
+            "cnes": "1111"
+        },
+        {
+            "codigoPrestador": "05678",
+            "nomePrestador": "Laboratório DEF",
+            "cnes": "2222"
+        },
+        {
+            "codigoPrestador": "09123",
+            "nomePrestador": "Clínica GHI",
+            "cnes": "3333"
+        }
+    ],
+    "procedimentos": [
+        {
+            "tabela": "Procedimentos",
+            "codigoProcedimento": "201030",
+            "descricaoProcedimento": "Raio-X",
+            "altaComplexidade": false,
+            "diasCarencia": 30
+        },
+        {
+            "tabela": "Procedimentos",
+            "codigoProcedimento": "201040",
+            "descricaoProcedimento": "Tomografia",
+            "altaComplexidade": true,
+            "diasCarencia": 90
+        },
+        {
+            "tabela": "Serviços Hospitalares",
+            "codigoProcedimento": "102030",
+            "descricaoProcedimento": "Diária Simples",
+            "altaComplexidade": false,
+            "diasCarencia": 120
+        },
+        {
+            "tabela": "Serviços Hospitalares",
+            "codigoProcedimento": "102060",
+            "descricaoProcedimento": "Diária UTI",
+            "altaComplexidade": "true",
+            "diasCarencia": 180
+        },
+        {
+            "tabela": "Medicamentos",
+            "codigoProcedimento": "307080",
+            "descricaoProcedimento": "Dipirona 1g",
+            "altaComplexidade": false,
+            "diasCarencia": 0
+        },
+        {
+            "tabela": "Medicamentos",
+            "codigoProcedimento": "304010",
+            "descricaoProcedimento": "Prednisona",
+            "altaComplexidade": false,
+            "diasCarencia": 0
+        }
+    ]
+}

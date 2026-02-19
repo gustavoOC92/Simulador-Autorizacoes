@@ -1,5 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePipe, NgIf } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
@@ -36,7 +36,7 @@ import { AutorizacaoResultado } from '../../domain/models/autorizacao-resultado.
     DialogAvisoComponent,
     AutorizacaoResultadoComponent,
     NgIf
-],
+  ],
   templateUrl: './autorizacao-guia.component.html',
   styleUrl: './autorizacao-guia.component.scss'
 })
@@ -72,11 +72,11 @@ export class AutorizacaoGuiaComponent implements OnInit {
     private readonly autorizacaoService: AutorizacaoService,
     private readonly prestadorService: PrestadorService,
     private beneficiarioState: DadosBeneficiarioStateService,
-    private router: Router) {}
+    private router: Router) { }
 
   ngOnInit(): void {
     const beneficiario = this.beneficiarioState.getBeneficiario();
-    
+
     this.numeroCarteira = beneficiario?.numeroCarteira!
     this.nomeBeneficiario = beneficiario?.nome!
     this.dataNascimento = beneficiario?.dataNascimento!
@@ -101,7 +101,7 @@ export class AutorizacaoGuiaComponent implements OnInit {
           this.prestadores = [
             { codigoPrestador: '', nomePrestador: 'Selecione o Prestador', cnes: '' },
             ...response
-            .sort((a, b) => a.nomePrestador.localeCompare(b.nomePrestador)),
+              .sort((a, b) => a.nomePrestador.localeCompare(b.nomePrestador)),
           ];
         }
       })
@@ -151,35 +151,39 @@ export class AutorizacaoGuiaComponent implements OnInit {
 
   async enviarAutorizacao() {
 
-    this.validarPreenchimentoAutorizacao()
+    if (this.validarPreenchimentoAutorizacao()) {
+      const payload: Autorizacao = {
+        numeroCarteira: this.numeroCarteira,
+        codigoPrestador: this.formGuia.get('codigoPrestador')?.value,
+        procedimentos: this.procedimentosGuia,
+      }
 
-    const payload: Autorizacao = {
-      numeroCarteira: this.numeroCarteira,
-      codigoPrestador: this.formGuia.get('codigoPrestador')?.value,
-      procedimentos: this.procedimentosGuia,
+      const retorno = await this.autorizacaoService.simulate(payload)
+      this.result.set(retorno);
+
+      this.exibirDialogResultado = true
     }
-
-    const retorno = await this.autorizacaoService.simulate(payload)
-    this.result.set(retorno);
-
-    this.exibirDialogResultado = true
   }
 
-  validarPreenchimentoAutorizacao() {
+  validarPreenchimentoAutorizacao(): boolean | undefined {
     if (this.numeroCarteira == undefined) {
       this.mensagemAviso = 'Volte e informe uma carteira de beneficiário!'
       this.exibirDialogAviso = true
+      return false
     }
 
     if (this.formGuia.get('codigoPrestador')?.value == '') {
       this.mensagemAviso = 'Selecione um Prestador!'
       this.exibirDialogAviso = true
-      return;
+      return false
     }
 
     if (this.procedimentosGuia.length == 0) {
       this.mensagemAviso = 'Insira ao menos um Procedimento!'
       this.exibirDialogAviso = true
+      return false
     }
+
+    return true
   }
 }

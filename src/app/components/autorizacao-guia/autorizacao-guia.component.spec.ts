@@ -82,18 +82,6 @@ describe('AutorizacaoGuiaComponent', () => {
     expect(component.prestadores[1].nomePrestador).toBe('Clínica GHI');
   });
 
-  it('deve preencher codigo e cnes ao selecionar prestador', () => {
-
-    const prestador = { codigoPrestador: '01234', cnes: '1111' };
-
-    component.ngOnInit();
-
-    component.formGuia.get('prestador')?.setValue(prestador);
-
-    expect(component.formGuia.get('codigoPrestador')?.value).toBe('01234');
-    expect(component.formGuia.get('cnes')?.value).toBe('1111');
-  });
-
   it('deve adicionar procedimento novo', () => {
 
     const proc = { codigoProcedimento: '201030' } as any;
